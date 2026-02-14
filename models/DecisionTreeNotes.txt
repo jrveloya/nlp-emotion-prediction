@@ -1,5 +1,5 @@
 - Hyperparameter tuning
--- max_depth 2 has poor performance
+-- max_depth 2 has poor performance -> underfitting
 -- min samples to split seems like it has little to no effect on model performance, usually defaults to 2
 -- min samples leaf has a large effect on model performance, almost as much as max_depth and especially when in combination with max_depth
 -- the combination of increasing max_depth and min_samples_leaf at the same time leads to a more complex and robust model that performs better
