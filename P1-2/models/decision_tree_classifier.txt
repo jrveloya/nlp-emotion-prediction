@@ -1,0 +1,84 @@
+
+Model overview:
+\subsection{Decision Tree Classifier}
+Decision Trees are supervised learning models that partition the feature space into regions that maximize class separation in a recursive manner. The model performs classification by learning a tree of decisions structured like a flowchart. Based on the features of the data, the model is capable of performing nonlinear decision boundaries and interpretable feature splits.
+
+The Decision Tree Classifier was trained using the features from the normalized and preprocessed datasets. During preprocessing, metadata and label-leak (non-numeric) columns were removed and other numeric features such as valence, arousal, etc. were used as input features according to the project requirements. The model then outputs a predicted classification label for each sample.
+
+According to the requirements of the project, a 60:20:20 split was used where 60% of the data is used for training, 20% is used for validation (hyperparameter tuning), and 20% is used for testing the overall performance of the model.
+
+Feature selection was also applied to the model in order to reduce dimensionality and weak features that contribute little to the classification performance of the model. A model-based feature selection strategy was used where feature importance scores are produced by a decision tree that was used to retain well performing features. The classifier was then retrained using the retained feature subset, allowing a better comparison from the baseline model (without feature selection).
+
+
+Evaluation:
+\subsection{Decision Tree Classifier}
+
+Table \ref{tab:dt_results} summarizes the experiments performed with the Decision Tree Classifier model on two datasets: EmoSounds and IADSED with different configurations. Baseline training, feature selection, and hyperparameter tuning were used to evaluate the performance of the model and to find the best performing configuration.
+
+\subsubsection{EmoSounds: Balanced and Imbalanced}
+For the balanced EmoSounds dataset, the baseline and tuned configuration achieved high training performances. This indicates that the model learned the test data a little too well where the train Macro-F1 score is around 0.97 - 1.00 for both configurations. This is considered a generalization gap, an indicator of overfitting since the validation Macro-F1 score of the model is found to be around 0.499 for the baseline model and 0.4536 for the tuned model. However, the test scores of the two models indicates some improvement. Specifically, the tuned model achieved a Macro-F1 score of 0.5941 and the baseline model achieved a score of 0.56. This indicates that hyperparameter tuning did improve the performance of the model; however, not enough to significantly reduce overfitting. The Imbalanced dataset performed worse on all accounts compared to the balanced dataset.
+
+\subsubsection{IADSED: Imbalanced}
+The imbalanced IADSED dataset results also show similar results to how the model performed in the latter dataset. Baseline model and DT with feature selection both achieved a significantly high score of Macro F1 = 1.0, but their validation and test scores noticably drops (validation Macro-F1 score= 0.41 and Test Macro-F1 = 0.40). The generalization gap, similar to the previous dataset, indicates that the model significantly overfits to the training data  rather than learning decision boundaries. 
+
+The tuned model performed worse in training (train Macro-F1 score= 0.6953), showing the complexity of the tree constrained the regularization. Moreover, the performance of the tuned model did not improve in terms of its score in validation and test (validation Macro-F1 = 0.3859 and test Macro-F1 = 0.3696). This indicatees that the tuned model is underfitting, where the model performance is being constrained by its incomplexity, being unable to capture meaningful patterns. The same can be told about the feature selection varaince of configuration, where retained features did not improve the classification performance for this dataset.
+
+\subsection{IADSED (Balanced)}
+For the balanced version of the IADSED dataset, the baseline and tuned configurations performed similarly, once again indicating that they both had a 1.0 Macro F-1 Score and later dropping down in validation and test. Also indicating strong overfitting. 
+
+Balancing the dataset did not improve the generalization capabilities of the model. The decision tree still hyperfocused on learning specific patterns in the data, leading to a large gap between training and validation/test scores. On the other hand, feature selection decreased the performance of the model. This suggests that boiling down the feature set to its highest performing features acually reduced the information needed by the model rather than its intended purpose of reducing noise. This indicates that the tree was already relying on specific splits and had its performance constrained through deminsionality reduction.
+
+
+% Decision Tree (DT) configuration comparison table
+% Metrics shown: Accuracy and Macro-F1 for Train / Val / Test
+
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|l|l|c|c|c|c|c|c|}
+\hline
+\textbf{Dataset} & \textbf{DT Configuration} &
+\textbf{Train Acc} & \textbf{Train Macro-F1} &
+\textbf{Val Acc}   & \textbf{Val Macro-F1} &
+\textbf{Test Acc}  & \textbf{Test Macro-F1} \\
+\hline
+
+\multirow{3}{*}{EmoSounds (Imbalanced)} 
+& Baseline DT
+& 1.0000 & 1.0000 & 0.5833 & 0.4755 & 0.5417 & 0.4577 \\
+& DT + Feature Selection
+& 1.0000 & 1.0000 & 0.5583 & 0.4539 & 0.5333 & 0.4644 \\
+& Tuned DT
+& 0.8917 & 0.8533 & 0.5750 & 0.4207 & 0.5583 & 0.4497 \\
+\hline
+
+\multirow{2}{*}{EmoSounds (Balanced)} 
+& Baseline DT
+& 1.0000 & 1.0000 & 0.--- & 0.4999 & 0.6167 & 0.5600 \\
+& Tuned DT
+& 0.9750 & 0.9790 & 0.5500 & 0.4536 & 0.6417 & 0.5941 \\
+\hline
+
+\multirow{3}{*}{IADSED (Imbalanced)} 
+& Baseline DT
+& 1.0000 & 1.0000 & 0.5027 & 0.4123 & 0.4839 & 0.4023 \\
+& DT + Feature Selection
+& 1.0000 & 1.0000 & 0.4595 & 0.3723 & 0.4839 & 0.3951 \\
+& Tuned DT
+& 0.7410 & 0.6953 & 0.4811 & 0.3859 & 0.4785 & 0.3696 \\
+\hline
+
+\multirow{3}{*}{IADSED (Balanced)} 
+& Baseline DT
+& 1.0000 & 1.0000 & 0.4486 & 0.3766 & 0.4839 & 0.4126 \\
+& DT + Feature Selection 
+& 1.0000 & 1.0000 & 0.4486 & 0.3743 & 0.4677 & 0.3972 \\
+& Tuned DT
+& 1.0000 & 1.0000 & 0.4486 & 0.3766 & 0.4839 & 0.4126 \\
+\hline
+\end{tabular}
+\caption{Decision Tree classifier performance across datasets and configurations. The ``best'' model per dataset setting is selected by validation Macro-F1.}
+\label{tab:dt_results}
+\end{table*}
