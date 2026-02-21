@@ -82,3 +82,79 @@ Balancing the dataset did not improve the generalization capabilities of the mod
 \caption{Decision Tree classifier performance across datasets and configurations. The ``best'' model per dataset setting is selected by validation Macro-F1.}
 \label{tab:dt_results}
 \end{table*}
+
+
+
+confusion matrix
+%EmoSounds Imbalanced - baseline 
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{c|cccc}
+\hline
+\textbf{True \textbackslash Pred} & 1 & 2 & 3 & 4 \\
+\hline
+1 & 4 & 8 & 0 & 0 \\
+2 & 5 & 36 & 3 & 3 \\
+3 & 2 & 6 & 5 & 7 \\
+4 & 2 & 3 & 16 & 20 \\
+\hline
+\end{tabular}
+\caption{Confusion Matrix — EmoSounds (Imbalanced), Baseline DT}
+\label{tab:cm_emo_imbalanced}
+\end{table}
+
+%EmoSounds Balanced - baseline
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{c|cccc}
+\hline
+\textbf{True \textbackslash Pred} & 1 & 2 & 3 & 4 \\
+\hline
+1 & 5 & 6 & 0 & 1 \\
+2 & 8 & 33 & 2 & 4 \\
+3 & 1 & 5 & 10 & 4 \\
+4 & 1 & 0 & 13 & 27 \\
+\hline
+\end{tabular}
+\caption{Confusion Matrix — EmoSounds (Balanced), Baseline DT}
+\label{tab:cm_emo_balanced}
+\end{table}
+
+%IADSED imbalanced 
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{c|cccc}
+\hline
+\textbf{True \textbackslash Pred} & 1 & 2 & 3 & 4 \\
+\hline
+1 & 5 & 6 & 0 & 1 \\
+2 & 8 & 33 & 2 & 4 \\
+3 & 1 & 5 & 10 & 4 \\
+4 & 1 & 0 & 13 & 27 \\
+\hline
+\end{tabular}
+\caption{Confusion Matrix — EmoSounds (Balanced), Baseline DT}
+\label{tab:cm_emo_balanced}
+\end{table}
+
+%IADSED balanced - baseline 
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{c|cccc}
+\hline
+\textbf{True \textbackslash Pred} & 1 & 2 & 3 & 4 \\
+\hline
+1 & 11 & 15 & 1 & 6 \\
+2 & 16 & 57 & 14 & 10 \\
+3 & 3 & 10 & 6 & 7 \\
+4 & 2 & 10 & 2 & 16 \\
+\hline
+\end{tabular}
+\caption{Confusion Matrix — IADSED (Balanced), Baseline DT}
+\label{tab:cm_iadsed_balanced}
+\end{table}
