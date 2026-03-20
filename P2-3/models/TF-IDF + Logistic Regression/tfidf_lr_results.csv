@@ -1,0 +1,3 @@
+Set,Accuracy,F1-Score (macro)
+Train,0.9808,0.9807
+Test,0.7885,0.7878
