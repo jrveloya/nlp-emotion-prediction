@@ -1,0 +1,2 @@
+Model,Accuracy,F1-score
+DistilBERT,0.8846153846153846,0.875
